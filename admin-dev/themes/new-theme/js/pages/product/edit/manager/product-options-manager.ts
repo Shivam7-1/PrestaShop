@@ -88,7 +88,7 @@ export default class ProductOptionsManager {
       return;
     }
 
-    descriptionField.innerHTML = `${defaultSelectedInput.dataset.description}`;
+    descriptionField.innerText = `${defaultSelectedInput.dataset.description}`;
 
     const inputs = document.querySelectorAll<HTMLInputElement>(ProductMap.options.visibilityRadio) ?? [];
     inputs.forEach((input: HTMLInputElement) => {
