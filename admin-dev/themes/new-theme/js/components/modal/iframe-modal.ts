@@ -240,7 +240,7 @@ export class IframeModal extends Modal implements IframeModalType {
     if (useInnerText) {
       this.modal.message.innerText = content;
     } else {
-      this.modal.message.innerHTML = content;
+      this.modal.message.innerText = content;
     }
     this.modal.message.classList.remove('d-none');
 
