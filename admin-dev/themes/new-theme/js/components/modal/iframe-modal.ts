@@ -31,7 +31,7 @@ import {
 } from '@components/modal/modal';
 import IframeEvent from '@components/modal/iframe-event';
 import {isUndefined} from '@components/typeguard';
-
+import DOMPurify from 'dompurify';
 export interface IframeModalContainerType extends ModalContainerType {
   iframe: HTMLIFrameElement;
   loader: HTMLElement;
@@ -240,7 +240,9 @@ export class IframeModal extends Modal implements IframeModalType {
     if (useInnerText) {
       this.modal.message.innerText = content;
     } else {
-      this.modal.message.innerText = content;
+        // Sanitize HTML and then set it using innerHTML
+        const sanitizedContent = DOMPurify.sanitize(content);
+        this.modal.message.innerHTML = sanitizedContent;
     }
     this.modal.message.classList.remove('d-none');
 
