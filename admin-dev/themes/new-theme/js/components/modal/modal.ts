@@ -122,7 +122,7 @@ export class ModalContainer implements ModalContainerType {
     if (params.modalTitle) {
       this.title = document.createElement('h4');
       this.title.classList.add('modal-title');
-      this.title.innerHTML = params.modalTitle;
+      this.title.innerText = params.modalTitle;
     }
 
     // Modal close button icon
