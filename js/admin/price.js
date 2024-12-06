@@ -22,7 +22,7 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
-
+import DOMPurify from 'dompurify';
 function getTax()
 {
 	if (noTax)
@@ -126,14 +126,15 @@ function calcPriceTI()
 	var priceTE = parseFloat(document.getElementById('priceTEReal').value.replace(/,/g, '.'));
 	var newPrice = addTaxes(priceTE);
 
-	document.getElementById('priceTI').value = (isNaN(newPrice) == true || newPrice < 0) ? '' :
-		ps_round(newPrice, priceDisplayPrecision);
-	document.getElementById('finalPrice').innerHTML = (isNaN(newPrice) == true || newPrice < 0) ? '' :
-		ps_round(newPrice, priceDisplayPrecision).toFixed(priceDisplayPrecision);
-	document.getElementById('finalPriceWithoutTax').innerHTML = (isNaN(priceTE) == true || priceTE < 0) ? '' :
-		(ps_round(priceTE, 6)).toFixed(6);
-	calcReduction();
+	document.getElementById('priceTI').value = (isNaN(newPrice) || newPrice < 0) ? '' :
+    ps_round(newPrice, priceDisplayPrecision);
 
+  document.getElementById('finalPrice').innerHTML = (isNaN(newPrice) || newPrice < 0) ? '' :
+     DOMPurify.sanitize(ps_round(newPrice, priceDisplayPrecision).toFixed(priceDisplayPrecision));
+
+  document.getElementById('finalPriceWithoutTax').innerHTML = (isNaN(priceTE) || priceTE < 0) ? '' :
+     DOMPurify.sanitize(ps_round(priceTE, 6).toFixed(6));
+calcReduction();
 	if (isNaN(parseFloat($('#priceTI').val())))
 	{
 		$('#priceTI').val('');
