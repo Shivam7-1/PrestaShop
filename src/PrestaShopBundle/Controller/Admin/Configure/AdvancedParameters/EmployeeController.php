@@ -241,7 +241,7 @@ class EmployeeController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.employee_form_handler')]
         FormHandlerInterface $formHandler,
     ): Response {
-        $employeeForm = $formBuilder->getForm();
+        $employeeForm = $formBuilder->getForm($request->request->all('employee'));
         $employeeForm->handleRequest($request);
 
         try {
@@ -332,7 +332,7 @@ class EmployeeController extends PrestaShopAdminController
 
         try {
             $editableEmployee = $this->dispatchQuery(new GetEmployeeForEditing((int) $employeeId));
-        } catch (EmployeeNotFoundException $e) {
+        } catch (EmployeeNotFoundException) {
             return $this->redirectToRoute('admin_employees_index');
         }
 
